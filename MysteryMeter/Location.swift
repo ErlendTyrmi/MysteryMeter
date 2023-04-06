@@ -18,6 +18,9 @@ class LocationDataManager : NSObject, ObservableObject, CLLocationManagerDelegat
    }
     
     @Published var authorizationStatus: CLAuthorizationStatus?
+    @Published var distanceToDestination: CLLocationDistance? = nil
+    // 55.698035, 12.588923
+    var destination = CLLocation(latitude: 55.698035, longitude: 12.588923)
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
             switch manager.authorizationStatus {
@@ -44,9 +47,20 @@ class LocationDataManager : NSObject, ObservableObject, CLLocationManagerDelegat
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
             // Insert code to handle location updates
+        distanceToDestination = manager.location?.distance(from: destination)
+        
+        print("DEST")
+        print(destination)
+        
+        print ("POS")
+        print(manager.location)
+        
+        print("DIST")
+        
+        print(manager.location?.distance(from: destination))
         }
         
-        func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
             print("error: \(error.localizedDescription)")
         }
 }
