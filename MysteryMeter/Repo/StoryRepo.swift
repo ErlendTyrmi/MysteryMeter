@@ -18,15 +18,16 @@ struct Chapter {
 
 class StoryRepo : NSObject, ObservableObject{
     
-    func fetchChapters() async -> [Chapter]{
+    func fetchChapters() -> [Chapter]{
         var _chapters = [Chapter]()
         _chapters.append(Chapter(
             id:"Start",
             sender:"Easter Bunny",
             content: "Big trouble! Someone has been stealing my eggs lately. I’m hoping you could snoop around and help me find the thief. Try asking the cute dog. He’s always watching, so he could have seen something…",
             imageUrl: "https://live.staticflickr.com/65535/52797801487_9bed7d739a_k.jpg",
-            latitude: 55.69860613064915,
-            longitude: 12.581735071970765
+            latitude: 55.698567016960006,
+            longitude: 12.581984298047066
+
         ))
         
         _chapters.append(Chapter(
@@ -77,8 +78,8 @@ class StoryRepo : NSObject, ObservableObject{
         _chapters.append(Chapter(
             id:"Garden",
             sender:"Easter Bunny",
-            content: "EPIC! I see you on the bunnyCam. The evil bunny got away, but we saved the eggs. Enjoy, friend! HAPPY EASTER, XOXO E.B.",
-            imageUrl: "",
+            content: "EPIC! I see you on the bunnyCam. The evil bunny got away, but we saved the eggs. Look around and you'll see them. Enjoy, friend! HAPPY EASTER, XOXO E.B.",
+            imageUrl: "https://cdn.pixabay.com/photo/2022/08/23/11/57/rabbit-7405618_1280.png",
             latitude: 0,
             longitude: 0
         ))

@@ -15,11 +15,11 @@ struct StoryView: View {
         
         if storyDataManager.currentChapter != nil{
             VStack{
-                MessageView(sender: storyDataManager.currentChapter!.sender, message: storyDataManager.currentChapter!.content)
-                    .padding()
-                    .background(Color.black)
-                    .opacity(0.7)
+                
                 Spacer()
+                
+                MessageView(sender: storyDataManager.currentChapter!.sender, message: storyDataManager.currentChapter!.content)
+              
             }.background(
                 AsyncImage(url: URL(string: storyDataManager.currentChapter!.imageUrl)) { image in
                     image.resizable()

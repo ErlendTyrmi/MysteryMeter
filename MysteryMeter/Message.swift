@@ -18,13 +18,27 @@ struct MessageView: View {
     
     var body: some View {
         VStack{
-            Button("toggLE", action: toggle)
-            
             if (open){
-                Label(sender ?? "...", systemImage: "paperplane")
-                    .font(.title)
-                    .labelStyle(.titleAndIcon)
-                Text(message ?? "...")}
+                VStack{
+                    HStack{
+                        Text(sender ?? "...s").font(.system(size: 12))
+                        Spacer()
+                    }
+                    Text(message ?? "...")
+                }
+                .padding()
+                .background(Color.black)
+                .opacity(0.7)
+            }
+            
+            HStack{
+                Button{
+                    toggle()
+                } label: {
+                    Label("toGGle maiL", systemImage: "paperplane").foregroundColor(Color.white)
+                }.padding().background(Color.black).clipShape(Capsule()).padding()
+            }
+            
         }.frame(alignment: .leading)
     }
 }
