@@ -9,25 +9,36 @@ import CoreLocation
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var locationDataManager = LocationDataManager()
+    @StateObject var locationManager = LocationManager()
+    @StateObject var storyManager = StoryManager()
+    
     var body: some View {
         
         VStack {
-            switch locationDataManager.locationManager.authorizationStatus {
+            switch locationManager.locationManager.authorizationStatus {
             case .authorizedWhenInUse:  // Location services are available.
                 // Insert code here of what should happen when Location services are authorized
-                
-                Spacer()
-                
-                Text("Your current location is:")
-                Text("Latitude: \(locationDataManager.locationManager.location?.coordinate.latitude.description ?? "Error loading")")
-                Text("Longitude: \(locationDataManager.locationManager.location?.coordinate.longitude.description ?? "Error loading")")
-                
-                Spacer()
-                
-                Text("Distance: \(locationDataManager.distanceToDestination?.description ?? "Error loading")")
-                
-                Spacer()
+                VStack{
+                    MessageView(sender: storyManager.currentChapter?.sender, message: storyManager.currentChapter?.content)
+                        .padding()
+                        .background(Color.black)
+                        .opacity(0.7)
+                    Spacer()
+                }.background(
+                        AsyncImage(url: URL(string: storyManager.currentChapter!.imageUrl)) { image in
+                            image.resizable()
+                                .aspectRatio(contentMode: .fill)
+                        } placeholder: {
+                            ProgressView()
+                        }
+                )
+                .padding()
+              
+                VStack{
+                    Text("Latitude: \(locationManager.locationManager.location?.coordinate.latitude.description ?? "Error loading")")
+                    Text("Longitude: \(locationManager.locationManager.location?.coordinate.longitude.description ?? "Error loading")")
+                    Text("Distance: \(locationManager.distanceToDestination?.description ?? "Error loading")")
+                }.padding()
                 
             case .restricted, .denied:  // Location services currently unavailable.
                 // Insert code here of what should happen when Location services are NOT authorized
@@ -38,7 +49,7 @@ struct ContentView: View {
             default:
                 ProgressView()
             }
-        }
+        }.preferredColorScheme(.dark)
     }
 }
 

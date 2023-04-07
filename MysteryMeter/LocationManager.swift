@@ -9,17 +9,17 @@
 import Foundation
 import CoreLocation
 
-class LocationDataManager : NSObject, ObservableObject, CLLocationManagerDelegate {
+class LocationManager : NSObject, ObservableObject, CLLocationManagerDelegate {
    var locationManager = CLLocationManager()
 
    override init() {
       super.init()
-      locationManager.delegate = self
+       locationManager.delegate = self
    }
     
     @Published var authorizationStatus: CLAuthorizationStatus?
     @Published var distanceToDestination: CLLocationDistance? = nil
-    // 55.698035, 12.588923
+
     var destination = CLLocation(latitude: 55.698035, longitude: 12.588923)
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
@@ -51,12 +51,9 @@ class LocationDataManager : NSObject, ObservableObject, CLLocationManagerDelegat
         
         print("DEST")
         print(destination)
-        
         print ("POS")
         print(manager.location)
-        
         print("DIST")
-        
         print(manager.location?.distance(from: destination))
         }
         
