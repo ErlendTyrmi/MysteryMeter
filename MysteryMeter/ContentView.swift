@@ -10,6 +10,8 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var locationDataManager = LocationDataManager()
+    @StateObject var storyDataManager = StoryDataManager()
+    
     var body: some View {
         
         VStack {
@@ -17,17 +19,27 @@ struct ContentView: View {
             case .authorizedWhenInUse:  // Location services are available.
                 // Insert code here of what should happen when Location services are authorized
                 
-                Spacer()
-                
-                Text("Your current location is:")
-                Text("Latitude: \(locationDataManager.locationManager.location?.coordinate.latitude.description ?? "Error loading")")
-                Text("Longitude: \(locationDataManager.locationManager.location?.coordinate.longitude.description ?? "Error loading")")
-                
-                Spacer()
-                
-                Text("Distance: \(locationDataManager.distanceToDestination?.description ?? "Error loading")")
-                
-                Spacer()
+                if storyDataManager.currentChapter != nil {
+                    VStack{
+                        MessageView(sender: storyDataManager.currentChapter?.sender, message: storyDataManager.currentChapter?.content)
+                            .padding()
+                            .background(Color.black)
+                            .opacity(0.7)
+                        Spacer()
+                    }.background(
+                        AsyncImage(url: URL(string: storyDataManager.currentChapter!.imageUrl)) { image in
+                            image.resizable()
+                                .aspectRatio(contentMode: .fill)
+                        } placeholder: {
+                            ProgressView()
+                        }
+                    )
+                    .padding()
+                }
+              
+                DashboardView(
+                    locationDataManager: locationDataManager
+                )
                 
             case .restricted, .denied:  // Location services currently unavailable.
                 // Insert code here of what should happen when Location services are NOT authorized
@@ -38,7 +50,7 @@ struct ContentView: View {
             default:
                 ProgressView()
             }
-        }
+        }.preferredColorScheme(.dark)
     }
 }
 

@@ -14,12 +14,14 @@ class LocationDataManager : NSObject, ObservableObject, CLLocationManagerDelegat
 
    override init() {
       super.init()
-      locationManager.delegate = self
+       locationManager.delegate = self
    }
     
     @Published var authorizationStatus: CLAuthorizationStatus?
-    @Published var distanceToDestination: CLLocationDistance? = nil
-    // 55.698035, 12.588923
+    @Published var distanceToDestination: CLLocationDistance?
+    @Published var latitude: CLLocationDegrees?
+    @Published var longitude: CLLocationDegrees?
+
     var destination = CLLocation(latitude: 55.698035, longitude: 12.588923)
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
@@ -48,16 +50,17 @@ class LocationDataManager : NSObject, ObservableObject, CLLocationManagerDelegat
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
             // Insert code to handle location updates
         distanceToDestination = manager.location?.distance(from: destination)
+        latitude = manager.location?.coordinate.latitude
+        longitude = manager.location?.coordinate.longitude
         
+        // Debug print
         print("DEST")
         print(destination)
-        
         print ("POS")
         print(manager.location)
-        
         print("DIST")
-        
         print(manager.location?.distance(from: destination))
+        
         }
         
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
