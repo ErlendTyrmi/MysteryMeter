@@ -23,6 +23,14 @@ class LocationDataManager : NSObject, ObservableObject, CLLocationManagerDelegat
     @Published var longitude: CLLocationDegrees?
 
     var destination = CLLocation(latitude: 55.698035, longitude: 12.588923)
+    
+    func setDestination(latitude: Double, longitude: Double){
+        destination = CLLocation(latitude: latitude, longitude: longitude)
+        
+        
+        // Just to be sure :-) Update dist as well
+        distanceToDestination = locationManager.location?.distance(from: destination)
+    }
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
             switch manager.authorizationStatus {

@@ -12,6 +12,18 @@ struct ContentView: View {
     @StateObject var locationDataManager = LocationDataManager()
     @StateObject var storyDataManager = StoryDataManager()
     
+    func increment(){
+        storyDataManager.increment()
+        
+        let chapter = storyDataManager.currentChapter
+        
+        if chapter != nil && chapter!.longitude != 0 {
+            locationDataManager.setDestination(latitude: chapter!.latitude, longitude: chapter!.longitude)
+        } else {
+            locationDataManager.setDestination(latitude: locationDataManager.latitude ?? 0, longitude: locationDataManager.longitude ?? 0)
+        }
+    }
+    
     var body: some View {
         
         VStack {
@@ -19,24 +31,23 @@ struct ContentView: View {
             case .authorizedWhenInUse:  // Location services are available.
                 // Insert code here of what should happen when Location services are authorized
                 
-                if storyDataManager.currentChapter != nil {
-                    VStack{
-                        MessageView(sender: storyDataManager.currentChapter?.sender, message: storyDataManager.currentChapter?.content)
-                            .padding()
-                            .background(Color.black)
-                            .opacity(0.7)
-                        Spacer()
-                    }.background(
-                        AsyncImage(url: URL(string: storyDataManager.currentChapter!.imageUrl)) { image in
-                            image.resizable()
-                                .aspectRatio(contentMode: .fill)
-                        } placeholder: {
-                            ProgressView()
-                        }
-                    )
-                    .padding()
-                }
+                StoryView(storyDataManager: storyDataManager)
               
+                
+                // TODO: Load first storypoint
+                if locationDataManager.distanceToDestination != nil &&
+                    locationDataManager.distanceToDestination! > 0 {
+                    
+                    Button(action: increment) {
+                        Text("NExT CLUe")
+                            .fontWeight(.black)
+                            .frame(maxWidth: .infinity)
+                            .padding(
+                            ).foregroundColor(Color.white)
+                    }
+                    .background(Color.green)
+                }
+                
                 DashboardView(
                     locationDataManager: locationDataManager
                 )

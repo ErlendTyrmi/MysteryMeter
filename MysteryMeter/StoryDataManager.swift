@@ -14,7 +14,7 @@ class StoryDataManager : NSObject, ObservableObject{
     override init() {
         super.init()
         
-    loadData()
+        loadData()
     }
     
     private var nextIndex = UserDefaults.standard.integer(forKey: "next");
@@ -22,9 +22,16 @@ class StoryDataManager : NSObject, ObservableObject{
     
     @Published var currentChapter: Chapter?;
 
-    private func increment(){
-            nextIndex += 1;
-            UserDefaults.standard.set(self.nextIndex, forKey: "next")
+    func increment() -> Void {
+        nextIndex += 1;
+        
+        if (nextIndex > chapters.count){
+            nextIndex = 0
+        }
+        
+        UserDefaults.standard.set(self.nextIndex, forKey: "next")
+        
+        print(nextIndex)
         
         loadNextChapter()
     }
@@ -38,6 +45,7 @@ class StoryDataManager : NSObject, ObservableObject{
         if (nextIndex < chapters.count){
             currentChapter = chapters[nextIndex]
         }
+        print(currentChapter?.content)
     }
     
     private func loadData(){

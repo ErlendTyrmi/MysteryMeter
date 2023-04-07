@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct MessageView: View {
-    @State var sender: String?
-    @State var message: String?
+    var sender: String?
+    var message: String?
     @State var open: Bool = true
     
     func toggle () -> Void {

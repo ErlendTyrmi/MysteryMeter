@@ -11,10 +11,19 @@ struct DashboardView: View {
     @StateObject var locationDataManager : LocationDataManager
     
     var body: some View {
-        VStack{
-            Text("Latitude: \(locationDataManager.latitude?.description ?? "Error loading")")
-            Text("Longitude: \(locationDataManager.longitude?.description ?? "Error loading")")
-            Text("Distance: \(locationDataManager.distanceToDestination?.description ?? "Error loading")")
+        HStack{
+            if locationDataManager.distanceToDestination != nil{
+                let dist = "\(String(format: "%.0f", locationDataManager.distanceToDestination!)) m"
+                Text(dist)
+            }
+            
+            
+            VStack{
+                Text("Lat: \(locationDataManager.latitude?.description ?? "Error loading")")
+                Text("Lon: \(locationDataManager.longitude?.description ?? "Error loading")")
+            }
+            
+            
         }.padding()
     }
 }
