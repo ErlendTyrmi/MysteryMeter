@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct DashboardView: View {
+    @StateObject var locationDataManager : LocationDataManager
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-struct Dashboard_Previews: PreviewProvider {
-    static var previews: some View {
-        DashboardView()
+        VStack{
+            Text("Latitude: \(locationDataManager.latitude?.description ?? "Error loading")")
+            Text("Longitude: \(locationDataManager.longitude?.description ?? "Error loading")")
+            Text("Distance: \(locationDataManager.distanceToDestination?.description ?? "Error loading")")
+        }.padding()
     }
 }

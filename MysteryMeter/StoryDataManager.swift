@@ -8,15 +8,13 @@
 import Foundation
 
 // Test repo class
-class StoryManager : NSObject, ObservableObject{
+class StoryDataManager : NSObject, ObservableObject{
     let storyRepo = StoryRepo()
     
     override init() {
         super.init()
         
-        // Create test data
-        chapters = storyRepo.fetchChapters();
-        updateNextChapter()
+    loadData()
     }
     
     private var nextIndex = UserDefaults.standard.integer(forKey: "next");
@@ -28,7 +26,7 @@ class StoryManager : NSObject, ObservableObject{
             nextIndex += 1;
             UserDefaults.standard.set(self.nextIndex, forKey: "next")
         
-        updateNextChapter()
+        loadNextChapter()
     }
     
     private func reset(){
@@ -36,9 +34,19 @@ class StoryManager : NSObject, ObservableObject{
         UserDefaults.standard.set(self.nextIndex, forKey: "next")
     }
     
-    private func updateNextChapter(){
+    private func loadNextChapter(){
         if (nextIndex < chapters.count){
             currentChapter = chapters[nextIndex]
+        }
+    }
+    
+    private func loadData(){
+        // Create test data
+        Task {
+            do {
+                chapters = await storyRepo.fetchChapters();
+                loadNextChapter()
+            }
         }
     }
 

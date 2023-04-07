@@ -18,7 +18,7 @@ struct Chapter {
 
 class StoryRepo : NSObject, ObservableObject{
     
-    func fetchChapters() -> [Chapter]{
+    func fetchChapters() async -> [Chapter]{
         var _chapters = [Chapter]()
         _chapters.append(Chapter(
             id:"Start",

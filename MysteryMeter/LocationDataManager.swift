@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 
-class LocationManager : NSObject, ObservableObject, CLLocationManagerDelegate {
+class LocationDataManager : NSObject, ObservableObject, CLLocationManagerDelegate {
    var locationManager = CLLocationManager()
 
    override init() {
@@ -18,7 +18,9 @@ class LocationManager : NSObject, ObservableObject, CLLocationManagerDelegate {
    }
     
     @Published var authorizationStatus: CLAuthorizationStatus?
-    @Published var distanceToDestination: CLLocationDistance? = nil
+    @Published var distanceToDestination: CLLocationDistance?
+    @Published var latitude: CLLocationDegrees?
+    @Published var longitude: CLLocationDegrees?
 
     var destination = CLLocation(latitude: 55.698035, longitude: 12.588923)
 
@@ -48,13 +50,17 @@ class LocationManager : NSObject, ObservableObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
             // Insert code to handle location updates
         distanceToDestination = manager.location?.distance(from: destination)
+        latitude = manager.location?.coordinate.latitude
+        longitude = manager.location?.coordinate.longitude
         
+        // Debug print
         print("DEST")
         print(destination)
         print ("POS")
         print(manager.location)
         print("DIST")
         print(manager.location?.distance(from: destination))
+        
         }
         
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
