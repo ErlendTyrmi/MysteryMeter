@@ -20,7 +20,10 @@ struct MessageView: View {
         VStack{
             if (open){
                 VStack{
-                    Text(sender ?? "...").font(.system(size: 12)).frame(maxWidth:.infinity, alignment: .leading)
+                    Text(sender ?? "...")
+                        .font(.system(size: 12))
+                        .frame(maxWidth:.infinity, alignment: .leading)
+                        .padding(.bottom, 8)
                     
                     Text(message ?? "...")
                 }
