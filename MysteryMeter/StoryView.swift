@@ -34,7 +34,7 @@ struct StoryView: View {
                 }
             )
             .frame(maxWidth: .infinity)
-            .padding()
+            .padding(.leading).padding(.trailing)
         }
     }
 }

@@ -39,9 +39,15 @@ struct ContentView: View {
             case .authorizedWhenInUse:  // Location services are available.
                 // Insert code here of what should happen when Location services are authorized
                 
-                StoryView(storyDataManager: storyDataManager).frame(maxWidth: .infinity)
+                // Cheat codes :-)
+                HStack{
+                    Button("ResEt", action: reset).foregroundColor(Color.gray.opacity(0.3)).padding(.leading)
+                    Spacer()
+                    Button("sKiP", action: increment).foregroundColor(Color.gray.opacity(0.3)).padding(.trailing)
+                }.frame(maxWidth: .infinity)
                 
-                Button("DEBUG BUTTON", action: increment)
+                
+                StoryView(storyDataManager: storyDataManager).frame(maxWidth: .infinity)
                 
                 if locationDataManager.distanceToDestination != nil &&
                     locationDataManager.distanceToDestination! < 8 {
@@ -70,8 +76,6 @@ struct ContentView: View {
                 DashboardView(
                     locationDataManager: locationDataManager
                 )
-                
-                // TODO: Flashing colors when close here!
                 
             case .restricted, .denied:  // Location services currently unavailable.
                 // Insert code here of what should happen when Location services are NOT authorized

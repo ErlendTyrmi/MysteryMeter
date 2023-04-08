@@ -15,13 +15,13 @@ struct DashboardView: View {
             
             // TODO: Radar blinking and spinning
             if (locationDataManager.distanceToDestination != nil && locationDataManager.distanceToDestination! < 15) {
-                RadarView(radarColor: Color.green)
+                RadarView(radarColor: Color.green).frame(maxWidth: 80)
             } else if (locationDataManager.distanceToDestination != nil && locationDataManager.distanceToDestination! < 20) {
-                RadarView(radarColor: Color.yellow)
+                RadarView(radarColor: Color.yellow).frame(maxWidth: 80)
             } else if (locationDataManager.distanceToDestination != nil && locationDataManager.distanceToDestination! < 100) {
-                RadarView(radarColor: Color.orange)
+                RadarView(radarColor: Color.orange).frame(maxWidth: 80)
             } else {
-                RadarView(radarColor: Color.gray)
+                RadarView(radarColor: Color.gray).frame(maxWidth: 80)
             }
             
             Spacer()
@@ -36,10 +36,10 @@ struct DashboardView: View {
             Spacer()
             
             VStack{
-                Text("X: \(String(format: "%.6f", locationDataManager.latitude ?? 0))")
+                Text("x1: \(String(format: "%.6f", locationDataManager.latitude ?? 0))")
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.system(size: 10))
-                Text("Y: \(String(format: "%.6f", locationDataManager.longitude ?? 0))")
+                Text("y1: \(String(format: "%.6f", locationDataManager.longitude ?? 0))")
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.system(size: 10))
             }.frame(maxWidth: 80, alignment: .leading)
