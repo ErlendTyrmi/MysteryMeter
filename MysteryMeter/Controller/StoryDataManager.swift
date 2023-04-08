@@ -11,30 +11,35 @@ import Foundation
 class StoryDataManager : NSObject, ObservableObject{
     let storyRepo = StoryRepo()
     
+    private var nextIndex : Int = 0
+    private var chapters = [Chapter]();
+    
     override init() {
         super.init()
         
-        loadData()
+        // Read defaults before loading text
+        nextIndex = UserDefaults.standard.integer(forKey: "next")
+        
+        loadChapters()
     }
     
-    public var nextIndex = 0;
-    private var chapters = [Chapter]();
-    
     @Published var currentChapter: Chapter?;
-
+    
     func increment() -> Void {
         nextIndex += 1;
         
-        if (nextIndex > chapters.count){
+        if (nextIndex > chapters.count - 1){
             nextIndex = 0
         }
+        
+        UserDefaults.standard.set(self.nextIndex, forKey: "next")
         
         setCurrentChapter()
     }
     
     func reset(){
         nextIndex = 0
-        
+        UserDefaults.standard.set(self.nextIndex, forKey: "next")
         setCurrentChapter()
     }
     
@@ -48,7 +53,7 @@ class StoryDataManager : NSObject, ObservableObject{
         }
     }
     
-    private func loadData(){
+    private func loadChapters(){
         // Create test data
         chapters = storyRepo.fetchChapters();
         currentChapter = chapters[nextIndex]

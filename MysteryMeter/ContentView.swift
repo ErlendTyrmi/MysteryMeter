@@ -41,11 +41,11 @@ struct ContentView: View {
                 
                 StoryView(storyDataManager: storyDataManager).frame(maxWidth: .infinity)
                 
-               // Button("DEBUG BUTTON", action: increment)
+                Button("DEBUG BUTTON", action: increment)
                 
                 if locationDataManager.distanceToDestination != nil &&
                     locationDataManager.distanceToDestination! < 8 {
-
+                    
                     if (storyDataManager.isLastChapter()){
                         Button(action: reset){
                             Text("FiniSh")
