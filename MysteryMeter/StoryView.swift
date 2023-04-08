@@ -18,7 +18,10 @@ struct StoryView: View {
                 
                 Spacer()
                 
-                MessageView(sender: storyDataManager.currentChapter!.sender, message: storyDataManager.currentChapter!.content)
+                MessageView(
+                    sender: storyDataManager.currentChapter!.sender,
+                            message: storyDataManager.currentChapter!.content,
+                    open: false)
               
             }.background(
                 AsyncImage(url: URL(string: storyDataManager.currentChapter!.imageUrl)) { image in
@@ -28,6 +31,7 @@ struct StoryView: View {
                     ProgressView()
                 }
             )
+            .frame(maxWidth: .infinity)
             .padding()
         }
     }

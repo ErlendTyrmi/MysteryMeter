@@ -15,15 +15,14 @@ struct DashboardView: View {
             
             // TODO: Radar blinking and spinning
             if (locationDataManager.distanceToDestination != nil && locationDataManager.distanceToDestination! < 15) {
-                Circle().frame(width: 42).foregroundColor(Color.green)
+                RadarView(radarColor: Color.green)
             } else if (locationDataManager.distanceToDestination != nil && locationDataManager.distanceToDestination! < 20) {
-                Circle().frame(width: 42).foregroundColor(Color.yellow)
+                RadarView(radarColor: Color.yellow)
             } else if (locationDataManager.distanceToDestination != nil && locationDataManager.distanceToDestination! < 100) {
-                Circle().frame(width: 42).foregroundColor(Color.red)
+                RadarView(radarColor: Color.orange)
             } else {
-                Circle().frame(width: 42).foregroundColor(Color.gray)
+                RadarView(radarColor: Color.gray)
             }
-           
             
             Spacer()
             
@@ -37,14 +36,13 @@ struct DashboardView: View {
             Spacer()
             
             VStack{
-                Text("X: \(locationDataManager.latitude?.description ?? "Error loading")")
+                Text("X: \(String(format: "%.6f", locationDataManager.latitude ?? 0))")
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.system(size: 10))
-                Text("Y: \(locationDataManager.longitude?.description ?? "Error loading")")
+                Text("Y: \(String(format: "%.6f", locationDataManager.longitude ?? 0))")
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.system(size: 10))
-            }.frame(maxWidth: 200, alignment: .leading)
-            
+            }.frame(maxWidth: 80, alignment: .leading)
             
         }.frame(maxWidth: .infinity)
             .padding()

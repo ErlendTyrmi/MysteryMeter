@@ -28,9 +28,6 @@ class StoryDataManager : NSObject, ObservableObject{
         if (nextIndex > chapters.count){
             nextIndex = 0
         }
-
-        // DEBUG
-        print(nextIndex)
         
         setCurrentChapter()
     }

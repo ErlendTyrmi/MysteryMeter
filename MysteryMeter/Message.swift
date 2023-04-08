@@ -10,7 +10,7 @@ import SwiftUI
 struct MessageView: View {
     var sender: String?
     var message: String?
-    @State var open: Bool = true
+    @State var open: Bool
     
     func toggle () -> Void {
         open = !open
@@ -20,14 +20,13 @@ struct MessageView: View {
         VStack{
             if (open){
                 VStack{
-                    HStack{
-                        Text(sender ?? "...s").font(.system(size: 12))
-                        Spacer()
-                    }
+                    Text(sender ?? "...").font(.system(size: 12)).frame(maxWidth:.infinity, alignment: .leading)
+                    
                     Text(message ?? "...")
                 }
                 .padding()
                 .background(Color.black)
+                .cornerRadius(20)
                 .opacity(0.7)
             }
             
@@ -36,9 +35,14 @@ struct MessageView: View {
                     toggle()
                 } label: {
                     Label("toGGle maiL", systemImage: "paperplane").foregroundColor(Color.white)
-                }.padding().background(Color.black).clipShape(Capsule()).padding()
+                }
+                .padding()
+                .background(Color.black)
+                .clipShape(Capsule())
+                .padding(.bottom)
+                .padding(.top, 10)
             }
             
-        }.frame(alignment: .leading)
+        }
     }
 }
