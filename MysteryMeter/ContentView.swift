@@ -41,41 +41,55 @@ struct ContentView: View {
                 
                 // Cheat codes :-)
                 HStack{
-                    Button("ResEt", action: reset).foregroundColor(Color.gray.opacity(0.3)).padding(.leading)
+                    Button("reset", action: reset).foregroundColor(Color.gray.opacity(0.2)).padding(.leading)
                     Spacer()
-                    Button("sKiP", action: increment).foregroundColor(Color.gray.opacity(0.3)).padding(.trailing)
+                    Button("skip", action: increment).foregroundColor(Color.gray.opacity(0.2)).padding(.trailing)
                 }.frame(maxWidth: .infinity)
                 
-                
-                StoryView(storyDataManager: storyDataManager).frame(maxWidth: .infinity)
-                
-                if locationDataManager.distanceToDestination != nil &&
-                    locationDataManager.distanceToDestination! < 8 {
+                if (storyDataManager.currentChapter != nil){
                     
-                    if (storyDataManager.isLastChapter()){
-                        Button(action: reset){
-                            Text("FiniSh")
-                                .fontWeight(.black)
-                                .frame(maxWidth: .infinity)
-                                .padding(
-                                ).foregroundColor(Color.white)
+                    StoryView(storyDataManager: storyDataManager).frame(maxWidth: .infinity)
+                    
+                    if locationDataManager.distanceToDestination != nil &&
+                        locationDataManager.distanceToDestination! < 8 {
+                        
+                        if (storyDataManager.isLastChapter()){
+                            Button(action: reset){
+                                Text("FiniSh")
+                                    .fontWeight(.black)
+                                    .frame(maxWidth: .infinity)
+                                    .padding(
+                                    ).foregroundColor(Color.white)
+                            }
+                            .background(Color.green)
+                        } else {
+                            Button(action: increment) {
+                                Text("NExT CLUe")
+                                    .fontWeight(.black)
+                                    .frame(maxWidth: .infinity)
+                                    .padding(
+                                    ).foregroundColor(Color.white)
+                            }
+                            .background(Color.green)
                         }
-                        .background(Color.green)
-                    } else {
-                        Button(action: increment) {
-                            Text("NExT CLUe")
-                                .fontWeight(.black)
-                                .frame(maxWidth: .infinity)
-                                .padding(
-                                ).foregroundColor(Color.white)
-                        }
-                        .background(Color.green)
                     }
+                    
+                    DashboardView(
+                        locationDataManager: locationDataManager
+                    )
+                } else {
+                    // Story is not loaded yet
+                    Button(action: reset){
+                        Text("Start")
+                            .fontWeight(.black)
+                            .frame(maxWidth: .infinity)
+                            .padding(
+                            ).foregroundColor(Color.white)
+                    }
+                    .background(Color.green)
                 }
                 
-                DashboardView(
-                    locationDataManager: locationDataManager
-                )
+               
                 
             case .restricted, .denied:  // Location services currently unavailable.
                 // Insert code here of what should happen when Location services are NOT authorized

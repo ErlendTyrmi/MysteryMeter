@@ -13,9 +13,9 @@
             continueAfterRunningActions = "No"
             filePath = "MysteryMeter/Controller/StoryDataManager.swift"
             startingColumnNumber = "18"
-            endingColumnNumber = "30"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
+            endingColumnNumber = "18"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
             landmarkName = "loadChapters()"
             landmarkType = "7">
          </BreakpointContent>

@@ -11,51 +11,48 @@ import Foundation
 class StoryDataManager : NSObject, ObservableObject{
     let storyRepo = StoryRepo()
     
-    private var nextIndex : Int = 0
-    private var chapters = [Chapter]();
+    private var chapterIndex : Int = 0
     
     override init() {
         super.init()
         
         // Read defaults before loading text
-        nextIndex = UserDefaults.standard.integer(forKey: "next")
+        chapterIndex = UserDefaults.standard.integer(forKey: "next")
         
         loadChapters()
     }
     
-    @Published var currentChapter: Chapter?;
+    @Published var currentChapter: Chapter?
     
     func increment() -> Void {
-        nextIndex += 1;
+        chapterIndex += 1;
         
-        if (nextIndex > chapters.count - 1){
-            nextIndex = 0
+        // Loop through the chapters
+        if (chapterIndex > storyRepo._chapters.count - 1){
+            chapterIndex = 0
         }
         
-        UserDefaults.standard.set(self.nextIndex, forKey: "next")
-        
+        UserDefaults.standard.set(self.chapterIndex, forKey: "next")
         setCurrentChapter()
     }
     
     func reset(){
-        nextIndex = 0
-        UserDefaults.standard.set(self.nextIndex, forKey: "next")
+        chapterIndex = 0
+        UserDefaults.standard.set(self.chapterIndex, forKey: "next")
         setCurrentChapter()
     }
     
     func isLastChapter() -> Bool {
-        return nextIndex >= chapters.count - 1
+        return chapterIndex >= storyRepo._chapters.count - 1
     }
     
     private func setCurrentChapter(){
-        if (nextIndex < chapters.count){
-            currentChapter = chapters[nextIndex]
+        if (chapterIndex < storyRepo._chapters.count){
+            currentChapter = storyRepo._chapters[chapterIndex]
         }
     }
     
-    private func loadChapters(){
-        // Create test data
-        chapters = storyRepo.fetchChapters();
-        currentChapter = chapters[nextIndex]
+    private func loadChapters() {
+            storyRepo.fetchChapters()
     }
 }

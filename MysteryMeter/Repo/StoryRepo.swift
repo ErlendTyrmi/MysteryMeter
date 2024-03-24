@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Firebase
 
 struct Chapter {
     var id: String;
@@ -17,8 +18,54 @@ struct Chapter {
 }
 
 class StoryRepo : NSObject, ObservableObject{
+    @Published var _chapters = [Chapter]()
     
-    func fetchChapters() -> [Chapter]{
+    func fetchChapters() {
+        
+        let db = Firestore.firestore()
+        let ref = db.collection("chapters")
+        
+        ref.getDocuments { snapshot, error in
+            
+            guard error == nil else {
+                print(error?.localizedDescription as? String ?? "")
+                return
+            }
+            
+            if let snapshot = snapshot{
+                for document in snapshot.documents {
+                
+                    let data = document.data()
+                    
+                let id = data["id"] as? String ?? ""
+                let sender = data["sender"] as? String ?? ""
+                let content = data["content"] as? String ?? ""
+                let imageUrl = data["imageUrl"] as? String ?? ""
+                let latitude = data["latitude"] as? String ?? ""
+                let longitude = data["longitude"] as? String ?? ""
+                    
+                    self._chapters.append(Chapter(
+                        id: id,
+                        sender: sender,
+                        content: content,
+                        imageUrl: imageUrl,
+                        latitude: Double(latitude) ?? 0,
+                        longitude: Double(longitude) ?? 0
+                    ))
+                }
+                print(self._chapters.count)
+                
+                for chap in self._chapters{
+                    print(chap.id)
+                    print(chap.content)
+                }
+            }
+        }
+    }
+    
+    
+    // Old version ;-)
+    func getStaticChapters() -> [Chapter]{
         var _chapters = [Chapter]()
         _chapters.append(Chapter(
             id:"Start",
