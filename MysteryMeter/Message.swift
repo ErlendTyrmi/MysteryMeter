@@ -26,6 +26,7 @@ struct MessageView: View {
                         .padding(.bottom, 8)
                     
                     Text(message ?? "...")
+                        .frame(maxWidth:.infinity, alignment: .leading)
                 }
                 .padding()
                 .background(Color.black)
@@ -37,7 +38,11 @@ struct MessageView: View {
                 Button{
                     toggle()
                 } label: {
-                    Label("toGGle maiL", systemImage: "paperplane").foregroundColor(Color.white)
+                    if (!open){
+                        Label("Show message", systemImage: "paperplane").foregroundColor(.white)
+                    } else {
+                        Label("Hide message", systemImage: "paperplane").foregroundColor(.white)
+                    }
                 }
                 .padding()
                 .background(Color.black)

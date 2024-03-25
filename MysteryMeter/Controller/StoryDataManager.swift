@@ -10,25 +10,23 @@ import Foundation
 // Test repo class
 class StoryDataManager : NSObject, ObservableObject{
     let storyRepo = StoryRepo()
-    
     private var chapterIndex : Int = 0
+    @Published var currentChapter: Chapter?
     
     override init() {
         super.init()
         
-        // Read defaults before loading text
+        // Read defaults before loading data
         chapterIndex = UserDefaults.standard.integer(forKey: "next")
         
         loadChapters()
     }
     
-    @Published var currentChapter: Chapter?
-    
     func increment() -> Void {
         chapterIndex += 1;
         
         // Loop through the chapters
-        if (chapterIndex > storyRepo._chapters.count - 1){
+        if (chapterIndex > storyRepo.chapters.count - 1){
             chapterIndex = 0
         }
         
@@ -43,16 +41,16 @@ class StoryDataManager : NSObject, ObservableObject{
     }
     
     func isLastChapter() -> Bool {
-        return chapterIndex >= storyRepo._chapters.count - 1
+        return chapterIndex >= storyRepo.chapters.count - 1
     }
     
     private func setCurrentChapter(){
-        if (chapterIndex < storyRepo._chapters.count){
-            currentChapter = storyRepo._chapters[chapterIndex]
+        if (chapterIndex < storyRepo.chapters.count){
+            currentChapter = storyRepo.chapters[chapterIndex]
         }
     }
     
     private func loadChapters() {
-            storyRepo.fetchChapters()
+        storyRepo.fetchChapters()
     }
 }

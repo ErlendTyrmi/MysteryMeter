@@ -16,12 +16,12 @@ struct DashboardView: View {
             // TODO: Radar blinking and spinning
             if (locationDataManager.distanceToDestination != nil && locationDataManager.distanceToDestination! < 15) {
                 RadarView(radarColor: Color.green).frame(maxWidth: 80)
-            } else if (locationDataManager.distanceToDestination != nil && locationDataManager.distanceToDestination! < 20) {
-                RadarView(radarColor: Color.yellow).frame(maxWidth: 80)
-            } else if (locationDataManager.distanceToDestination != nil && locationDataManager.distanceToDestination! < 100) {
+            } else if (locationDataManager.distanceToDestination != nil && locationDataManager.distanceToDestination! < 40) {
                 RadarView(radarColor: Color.orange).frame(maxWidth: 80)
+            } else if (locationDataManager.distanceToDestination != nil && locationDataManager.distanceToDestination! < 100) {
+                RadarView(radarColor: Color.cyan).frame(maxWidth: 80)
             } else {
-                RadarView(radarColor: Color.gray).frame(maxWidth: 80)
+                RadarView(radarColor: .gray).frame(maxWidth: 80)
             }
             
             Spacer()

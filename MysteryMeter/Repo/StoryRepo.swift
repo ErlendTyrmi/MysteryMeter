@@ -18,7 +18,7 @@ struct Chapter {
 }
 
 class StoryRepo : NSObject, ObservableObject{
-    @Published var _chapters = [Chapter]()
+    @Published var chapters = [Chapter]()
     
     func fetchChapters() {
         
@@ -41,21 +41,21 @@ class StoryRepo : NSObject, ObservableObject{
                 let sender = data["sender"] as? String ?? ""
                 let content = data["content"] as? String ?? ""
                 let imageUrl = data["imageUrl"] as? String ?? ""
-                let latitude = data["latitude"] as? String ?? ""
-                let longitude = data["longitude"] as? String ?? ""
+                let latitude = data["latitude"] as? Double ?? 0
+                let longitude = data["longitude"] as? Double ?? 0
                     
-                    self._chapters.append(Chapter(
+                    self.chapters.append(Chapter(
                         id: id,
                         sender: sender,
                         content: content,
                         imageUrl: imageUrl,
-                        latitude: Double(latitude) ?? 0,
-                        longitude: Double(longitude) ?? 0
+                        latitude: latitude,
+                        longitude: longitude
                     ))
                 }
-                print(self._chapters.count)
+                print(self.chapters.count)
                 
-                for chap in self._chapters{
+                for chap in self.chapters{
                     print(chap.id)
                     print(chap.content)
                 }
