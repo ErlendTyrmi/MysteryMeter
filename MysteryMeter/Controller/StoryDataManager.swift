@@ -10,47 +10,51 @@ import Foundation
 // Test repo class
 class StoryDataManager : NSObject, ObservableObject{
     let storyRepo = StoryRepo()
+    private var chapterIndex : Int = 0
+    @Published var currentChapter: Chapter?
     
     override init() {
         super.init()
         
-        loadData()
+        // Read defaults before loading data. This is 0 if it doesn't exist.
+        chapterIndex = UserDefaults.standard.integer(forKey: "next")
+        
+        loadChapters()
     }
     
-    public var nextIndex = 0;
-    private var chapters = [Chapter]();
-    
-    @Published var currentChapter: Chapter?;
-
     func increment() -> Void {
-        nextIndex += 1;
+        chapterIndex += 1;
         
-        if (nextIndex > chapters.count){
-            nextIndex = 0
+        // Loop through the chapters
+        if (chapterIndex > storyRepo.chapters.count - 1){
+            chapterIndex = 0
         }
+        
+        UserDefaults.standard.set(self.chapterIndex, forKey: "next")
         
         setCurrentChapter()
     }
     
     func reset(){
-        nextIndex = 0
+        chapterIndex = 0
+        
+        // Save in defaults
+        UserDefaults.standard.set(self.chapterIndex, forKey: "next")
         
         setCurrentChapter()
     }
     
     func isLastChapter() -> Bool {
-        return nextIndex >= chapters.count - 1
+        return chapterIndex >= storyRepo.chapters.count - 1
     }
     
     private func setCurrentChapter(){
-        if (nextIndex < chapters.count){
-            currentChapter = chapters[nextIndex]
+        if (chapterIndex < storyRepo.chapters.count){
+            currentChapter = storyRepo.chapters[chapterIndex]
         }
     }
     
-    private func loadData(){
-        // Create test data
-        chapters = storyRepo.fetchChapters();
-        currentChapter = chapters[nextIndex]
+    private func loadChapters() {
+        storyRepo.fetchChapters()
     }
 }

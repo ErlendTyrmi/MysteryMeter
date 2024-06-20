@@ -26,13 +26,15 @@ struct StoryView: View {
             }.background(
                 AsyncImage(url: URL(string: storyDataManager.currentChapter!.imageUrl)) { image in
                     image.resizable()
-                        .aspectRatio(contentMode: .fill)
+                        .scaledToFill()
+                        .clipped()
+                     
                 } placeholder: {
                     ProgressView()
                 }
             )
             .frame(maxWidth: .infinity)
-            .padding()
+            .padding(.leading).padding(.trailing)
         }
     }
 }
