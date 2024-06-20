@@ -19,7 +19,13 @@ struct ContentView: View {
     
     func reset(){
         storyDataManager.reset()
-        updateDestination(chapter: storyDataManager.currentChapter)
+
+        let chapter = storyDataManager.currentChapter;
+
+        if (chapter != nil){
+            locationDataManager.setDestination(latitude: chapter!.latitude, longitude: chapter!.longitude)
+            updateDestination(chapter: storyDataManager.currentChapter)
+        }
     }
     
     func updateDestination(chapter: Chapter?){

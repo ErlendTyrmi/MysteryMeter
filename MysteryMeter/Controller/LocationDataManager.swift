@@ -26,10 +26,7 @@ class LocationDataManager : NSObject, ObservableObject, CLLocationManagerDelegat
     
     func setDestination(latitude: Double, longitude: Double){
         destination = CLLocation(latitude: latitude, longitude: longitude)
-        
-        
-        // Just to be sure :-) Update dist as well
-        distanceToDestination = locationManager.location?.distance(from: destination)
+        //distanceToDestination = locationManager.location?.distance(from: destination)
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {

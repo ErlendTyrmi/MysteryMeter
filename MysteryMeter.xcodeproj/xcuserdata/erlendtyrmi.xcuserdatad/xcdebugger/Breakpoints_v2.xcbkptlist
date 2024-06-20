@@ -8,14 +8,14 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "A509978B-CA29-4D77-8632-96CDF1DFADA6"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MysteryMeter/Controller/StoryDataManager.swift"
             startingColumnNumber = "18"
             endingColumnNumber = "18"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
             landmarkName = "loadChapters()"
             landmarkType = "7">
          </BreakpointContent>

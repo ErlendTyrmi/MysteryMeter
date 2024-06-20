@@ -16,7 +16,7 @@ class StoryDataManager : NSObject, ObservableObject{
     override init() {
         super.init()
         
-        // Read defaults before loading data
+        // Read defaults before loading data. This is 0 if it doesn't exist.
         chapterIndex = UserDefaults.standard.integer(forKey: "next")
         
         loadChapters()
@@ -31,12 +31,16 @@ class StoryDataManager : NSObject, ObservableObject{
         }
         
         UserDefaults.standard.set(self.chapterIndex, forKey: "next")
+        
         setCurrentChapter()
     }
     
     func reset(){
         chapterIndex = 0
+        
+        // Save in defaults
         UserDefaults.standard.set(self.chapterIndex, forKey: "next")
+        
         setCurrentChapter()
     }
     
