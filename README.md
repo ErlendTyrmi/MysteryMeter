@@ -6,4 +6,4 @@ Easter egg hunting app for iOS
 - Logic for simple gps-adventure
 - Firebase data
   
-![screenshot](readme_resources/screenshot.png)
+![screenshot](readme_resources/screenshot.png | width=100)
